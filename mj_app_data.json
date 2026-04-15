@@ -97,7 +97,7 @@
       "premiumG": "0",
       "premiumB": "0",
       "travel": "0",
-      "early": "0",
+      "early": "10000",
       "deposit": "250000",
       "rb1": "30000",
       "rb2": "30000",
