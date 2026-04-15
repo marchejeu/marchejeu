@@ -328,7 +328,12 @@
       "rb2": "50000",
       "mycode": "AT502E",
       "refcode": "AB472K",
-      "buddies": [],
+      "buddies": [
+        {
+          "name": "명문영",
+          "paid": false
+        }
+      ],
       "memo": "",
       "review1": true,
       "review2": false,
