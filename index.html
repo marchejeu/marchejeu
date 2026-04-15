@@ -2,11 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="마르체쥬">
-<meta name="theme-color" content="#1A1714">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>wedding marchejeu</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -30,7 +26,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--dark
 input,textarea,select,button{font-family:'Noto Sans KR',sans-serif}
 
 /* ══ TOP NAV ══ */
-.top{height:54px;background:var(--dark);display:flex;align-items:center;padding:0 16px;padding-top:env(safe-area-inset-top);gap:12px;flex-shrink:0;position:relative;z-index:200}
+.top{height:54px;background:var(--dark);display:flex;align-items:center;padding:0 16px;gap:12px;flex-shrink:0;position:relative;z-index:200}
 .top-logo{font-family:'Noto Serif KR',serif;font-style:italic;color:var(--gold);font-size:1rem;letter-spacing:0.04em;flex-shrink:0}
 .top-div{width:1px;height:18px;background:rgba(255,255,255,0.1);flex-shrink:0}
 .app-tabs{display:flex;gap:2px;flex:1}
@@ -39,16 +35,6 @@ input,textarea,select,button{font-family:'Noto Sans KR',sans-serif}
 .app-tab.active{background:rgba(201,168,76,0.15);color:var(--gold)}
 .top-action{background:none;border:1px solid rgba(201,168,76,0.35);border-radius:7px;padding:5px 12px;color:var(--gold);font-size:0.7rem;font-weight:700;cursor:pointer;transition:all 0.15s;flex-shrink:0}
 .top-action:hover{background:var(--gold);color:var(--dark)}
-
-/* ══ BOTTOM TAB BAR (모바일) ══ */
-.bottom-tabs{display:none;background:var(--dark);border-top:1px solid rgba(255,255,255,0.07);padding-bottom:env(safe-area-inset-bottom);flex-shrink:0;z-index:200}
-.bottom-tabs-inner{display:flex}
-.bottom-tab{flex:1;background:none;border:none;color:var(--sub);font-size:0.6rem;font-weight:600;padding:10px 4px 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;transition:all 0.15s;-webkit-tap-highlight-color:transparent}
-.bottom-tab .bt-icon{font-size:1.3rem;line-height:1}
-.bottom-tab.active{color:var(--gold)}
-.bottom-tab.active .bt-icon{transform:scale(1.1)}
-.bottom-action{flex:1;background:rgba(201,168,76,0.12);border:none;border-radius:10px;margin:6px 10px;color:var(--gold);font-size:0.72rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;-webkit-tap-highlight-color:transparent;transition:all 0.15s}
-.bottom-action:active{background:rgba(201,168,76,0.25)}
 
 /* ══ APP PANELS ══ */
 .app-panel{display:none;flex:1;overflow:hidden;flex-direction:column}
@@ -293,75 +279,21 @@ input,textarea,select,button{font-family:'Noto Sans KR',sans-serif}
   .wf-layout{grid-template-columns:1fr}
   .stage-nav{display:none}
 }
-
-/* ══ 모바일 반응형 ══ */
-@media(max-width:680px){
-  /* 상단 탭 숨기고 하단 탭 표시 */
-  .app-tabs{display:none}
-  .top-div{display:none}
-  .top-action{display:none}
-  .top{padding:0 16px;padding-top:env(safe-area-inset-top)}
-  .bottom-tabs{display:block}
-
-  /* body 높이 조정 */
-  body{height:100dvh}
-
-  /* 예약 카드 헤더 모바일 정리 */
-  .card-head{flex-wrap:wrap;gap:5px;padding:10px 12px}
-  .card-name{font-size:0.85rem;order:1;flex:1}
-  .card-date{order:2;min-width:auto}
-  .card-side{order:3}
-  .status-dots{order:4}
-  .card-total{order:5;font-size:0.78rem}
-  .card-remain{order:6;font-size:0.68rem}
-  .card-chevron{order:7}
-
-  /* 필터바 모바일 */
-  .filter-bar{padding:8px 12px;gap:6px}
-  .filter-chip{font-size:0.65rem;padding:3px 10px}
-  .filter-search{min-width:100px}
-
-  /* 요약바 */
-  .summary{padding:8px 12px;gap:14px}
-  .sum-val{font-size:0.85rem}
-
-  /* 모달 모바일 */
-  .overlay{padding:0;align-items:flex-end}
-  .modal{border-radius:20px 20px 0 0;max-height:92dvh;width:100%;margin:0;padding:20px 16px;padding-bottom:calc(16px + env(safe-area-inset-bottom))}
-
-  /* row2, row3 모바일에서 1열 */
-  .mf .row3{grid-template-columns:1fr 1fr}
-
-  /* 워크플로우 모바일 - 단계 선택 드롭다운 */
-  .wf-layout{grid-template-columns:1fr}
-  .stage-nav{display:none}
-  .wf-stage-select-wrap{display:flex}
-
-  /* 당일 준비 폰 최적화 */
-  .dayof-wrap{max-width:100%}
-  .do-info-edit{grid-template-columns:1fr 1fr}
-
-  /* 체크아이템 탭 영역 키우기 */
-  .ci{padding:12px 11px}
-  .ci-box{width:22px;height:22px}
-  .ci-text{font-size:0.84rem}
-
-  .bk-list{padding:10px 12px}
-}
-
 </style>
 </head>
 <body>
 
 <!-- TOP NAV -->
 <div class="top">
-  <div class="top-logo">wedding marchejeu</div>
+  <div class="top-logo">marchejeu</div>
   <div class="top-div"></div>
   <div class="app-tabs">
     <button class="app-tab active" onclick="switchApp('booking')">📋 예약</button>
     <button class="app-tab" onclick="switchApp('workflow')">💬 워크플로우</button>
     <button class="app-tab" onclick="switchApp('dayof')">✓ 당일</button>
   </div>
+  <button class="top-action" id="sync-btn" onclick="manualSync()" style="border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.45);margin-right:2px">↻</button>
+  <button class="top-action" onclick="openSettings()" style="border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.45);margin-right:4px">⚙</button>
   <button class="top-action" id="top-action-btn" onclick="topAction()">＋ 예약 추가</button>
 </div>
 
@@ -380,10 +312,6 @@ input,textarea,select,button{font-family:'Noto Sans KR',sans-serif}
 
 <!-- ══ PANEL 2: 워크플로우 ══ -->
 <div class="app-panel" id="panel-workflow">
-  <!-- 모바일용 단계 선택 -->
-  <div class="wf-stage-select-wrap" style="display:none;background:var(--white);border-bottom:1px solid var(--line);padding:8px 14px;flex-shrink:0">
-    <select id="wf-stage-select" onchange="setStage(this.value)" style="width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:8px;padding:8px 12px;font-size:0.85rem;color:var(--dark);outline:none"></select>
-  </div>
   <div class="wf-layout">
     <nav class="stage-nav" id="stage-nav"></nav>
     <div class="wf-main">
@@ -506,21 +434,39 @@ input,textarea,select,button{font-family:'Noto Sans KR',sans-serif}
   </div>
 </div></div>
 
-<!-- ══ BOTTOM TAB BAR (모바일) ══ -->
-<div class="bottom-tabs" id="bottom-tabs">
-  <div class="bottom-tabs-inner">
-    <button class="bottom-tab active" id="btab-booking" onclick="switchApp('booking')">
-      <span class="bt-icon">📋</span>예약
-    </button>
-    <button class="bottom-tab" id="btab-workflow" onclick="switchApp('workflow')">
-      <span class="bt-icon">💬</span>워크플로우
-    </button>
-    <button class="bottom-tab" id="btab-dayof" onclick="switchApp('dayof')">
-      <span class="bt-icon">✓</span>당일
-    </button>
-    <button class="bottom-action" id="bottom-action-btn" onclick="topAction()">＋ 추가</button>
+<!-- ══ SETTINGS MODAL ══ -->
+<div class="overlay" id="settings-modal"><div class="modal">
+  <h3>⚙ GitHub 동기화 설정</h3>
+  <div class="mf">
+    <label>GitHub Username</label>
+    <input id="cfg-user" placeholder="예) marchejeu" autocomplete="off">
   </div>
-</div>
+  <div class="mf">
+    <label>Repository 이름</label>
+    <input id="cfg-repo" placeholder="예) marchejeu" autocomplete="off">
+  </div>
+  <div class="mf">
+    <label>Personal Access Token (repo 권한)</label>
+    <input id="cfg-token" type="password" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off">
+    <div class="hint">💡 토큰은 이 기기 localStorage에만 저장돼요. 서버로 전송되지 않아요.</div>
+  </div>
+  <div class="mf">
+    <label>저장 파일명</label>
+    <input id="cfg-file" placeholder="mj_app_data.json" autocomplete="off">
+    <div class="hint">💡 repo 루트에 이 이름으로 JSON 저장돼요.</div>
+  </div>
+  <div style="font-size:0.72rem;color:var(--sub);background:var(--bg);border-radius:8px;padding:10px 12px;margin-bottom:4px;line-height:1.8">
+    <strong style="color:var(--dark)">사용 방법</strong><br>
+    1. github.com/settings/tokens → <strong>repo</strong> 권한 토큰 발급<br>
+    2. 위 항목 입력 후 저장<br>
+    3. 상단 ↻ 버튼으로 수동 동기화<br>
+    4. 데이터 변경 시 자동으로 GitHub 저장
+  </div>
+  <div class="m-actions">
+    <button class="mbtn cancel" onclick="closeSettings()">취소</button>
+    <button class="mbtn ok" onclick="saveSettings()">저장</button>
+  </div>
+</div></div>
 
 <div class="toast" id="toast"></div>
 
@@ -530,31 +476,14 @@ input,textarea,select,button{font-family:'Noto Sans KR',sans-serif}
 ══════════════════════════════════════════ */
 let curApp = 'booking';
 const actionLabels = {booking:'＋ 예약 추가', workflow:'＋ 템플릿 추가', dayof:'🖨 인쇄'};
-const actionLabelsShort = {booking:'＋ 추가', workflow:'＋ 추가', dayof:'🖨 인쇄'};
 
 function switchApp(app) {
   curApp = app;
   document.querySelectorAll('.app-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.app-tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.bottom-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('panel-' + app).classList.add('active');
-  const idx = ['booking','workflow','dayof'].indexOf(app);
-  document.querySelectorAll('.app-tab')[idx].classList.add('active');
-  const btab = document.getElementById('btab-' + app);
-  if(btab) btab.classList.add('active');
+  document.querySelectorAll('.app-tab')[['booking','workflow','dayof'].indexOf(app)].classList.add('active');
   document.getElementById('top-action-btn').textContent = actionLabels[app];
-  const bottomBtn = document.getElementById('bottom-action-btn');
-  if(bottomBtn) bottomBtn.textContent = actionLabelsShort[app];
-  // 워크플로우 모바일 셀렉트 업데이트
-  if(app === 'workflow') updateWfStageSelect();
-}
-
-function updateWfStageSelect() {
-  const sel = document.getElementById('wf-stage-select');
-  if(!sel) return;
-  sel.innerHTML = STAGES.map(s =>
-    `<option value="${s.id}"${s.id===curStage?' selected':''}>${s.badge} ${s.name}</option>`
-  ).join('');
 }
 
 function topAction() {
@@ -579,12 +508,149 @@ document.addEventListener('keydown', e => {
 });
 
 /* ══════════════════════════════════════════
+   GITHUB SYNC ENGINE
+══════════════════════════════════════════ */
+function getCfg(){
+  return{
+    user:localStorage.getItem('mj_gh_user')||'',
+    repo:localStorage.getItem('mj_gh_repo')||'',
+    token:localStorage.getItem('mj_gh_token')||'',
+    file:localStorage.getItem('mj_gh_file')||'mj_app_data.json',
+  };
+}
+function hasCfg(){const c=getCfg();return!!(c.user&&c.repo&&c.token);}
+
+let _ghSha=null;
+let _syncTimer=null;
+
+function setSyncBtn(state){
+  const btn=document.getElementById('sync-btn');if(!btn)return;
+  if(state==='load')btn.textContent='↻ ...';
+  else if(state==='ok'){btn.textContent='✓';btn.style.color='var(--green)';setTimeout(()=>{btn.textContent='↻';btn.style.color='';},2000);}
+  else if(state==='err'){btn.textContent='✕';btn.style.color='var(--red)';setTimeout(()=>{btn.textContent='↻';btn.style.color='';},3000);}
+  else btn.textContent='↻';
+}
+
+function getAllData(){
+  return{
+    bookings: JSON.parse(localStorage.getItem('mj_bookings')||'[]'),
+    flow: JSON.parse(localStorage.getItem('mj_flow')||'[]'),
+    dayof: JSON.parse(localStorage.getItem('mj_dayof_v2')||'null'),
+  };
+}
+
+async function ghGet(){
+  const c=getCfg();
+  const r=await fetch(`https://api.github.com/repos/${c.user}/${c.repo}/contents/${c.file}`,{
+    headers:{Authorization:`token ${c.token}`,Accept:'application/vnd.github.v3+json'}
+  });
+  if(r.status===404)return null;
+  if(!r.ok)throw new Error('GET 실패 '+r.status);
+  return r.json();
+}
+
+async function ghPut(data,sha){
+  const c=getCfg();
+  const body={
+    message:'마르체쥬 앱 데이터 업데이트',
+    content:btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2)))),
+  };
+  if(sha)body.sha=sha;
+  const r=await fetch(`https://api.github.com/repos/${c.user}/${c.repo}/contents/${c.file}`,{
+    method:'PUT',
+    headers:{Authorization:`token ${c.token}`,Accept:'application/vnd.github.v3+json','Content-Type':'application/json'},
+    body:JSON.stringify(body)
+  });
+  if(!r.ok)throw new Error('PUT 실패 '+r.status);
+  return r.json();
+}
+
+async function ghPush(){
+  if(!hasCfg())return;
+  setSyncBtn('load');
+  try{
+    const res=await ghPut(getAllData(),_ghSha);
+    _ghSha=res.content.sha;
+    setSyncBtn('ok');
+  }catch(e){
+    setSyncBtn('err');
+    toast('GitHub 저장 실패: '+e.message);
+  }
+}
+
+function schedulePush(){
+  clearTimeout(_syncTimer);
+  _syncTimer=setTimeout(ghPush,1500); // 1.5초 debounce
+}
+
+async function ghPull(){
+  if(!hasCfg())return false;
+  setSyncBtn('load');
+  try{
+    const file=await ghGet();
+    if(!file){setSyncBtn('ok');return false;}
+    const data=JSON.parse(decodeURIComponent(escape(atob(file.content.replace(/\n/g,'')))));
+    _ghSha=file.sha;
+    if(data.bookings)localStorage.setItem('mj_bookings',JSON.stringify(data.bookings));
+    if(data.flow)localStorage.setItem('mj_flow',JSON.stringify(data.flow));
+    if(data.dayof)localStorage.setItem('mj_dayof_v2',JSON.stringify(data.dayof));
+    setSyncBtn('ok');
+    return true;
+  }catch(e){
+    setSyncBtn('err');
+    toast('GitHub 로드 실패: '+e.message);
+    return false;
+  }
+}
+
+async function manualSync(){
+  if(!hasCfg()){openSettings();return;}
+  const updated=await ghPull();
+  if(updated){
+    // 모든 데이터 다시 로드
+    bookings=JSON.parse(localStorage.getItem('mj_bookings')||'[]');
+    try{tmpls=JSON.parse(localStorage.getItem('mj_flow'))||null;}catch{tmpls=null;}
+    if(!tmpls||!tmpls.length)tmpls=WF_DEFAULT.map(t=>({...t,id:'t'+Math.random().toString(36).slice(2)}));
+    doLoadState();
+    bkRender();wfRender();doRenderChecks();doRenderSupplies();
+    toast('동기화 완료 ✓');
+  }
+}
+
+/* ══ SETTINGS ══ */
+function openSettings(){
+  const c=getCfg();
+  document.getElementById('cfg-user').value=c.user;
+  document.getElementById('cfg-repo').value=c.repo;
+  document.getElementById('cfg-token').value=c.token;
+  document.getElementById('cfg-file').value=c.file||'mj_app_data.json';
+  document.getElementById('settings-modal').classList.add('on');
+}
+function closeSettings(){document.getElementById('settings-modal').classList.remove('on');}
+function saveSettings(){
+  const user=document.getElementById('cfg-user').value.trim();
+  const repo=document.getElementById('cfg-repo').value.trim();
+  const token=document.getElementById('cfg-token').value.trim();
+  const file=document.getElementById('cfg-file').value.trim()||'mj_app_data.json';
+  if(!user||!repo||!token){toast('모두 입력해주세요');return;}
+  localStorage.setItem('mj_gh_user',user);
+  localStorage.setItem('mj_gh_repo',repo);
+  localStorage.setItem('mj_gh_token',token);
+  localStorage.setItem('mj_gh_file',file);
+  _ghSha=null;
+  closeSettings();
+  toast('설정 저장됨. 동기화 중...');
+  manualSync();
+}
+document.getElementById('settings-modal').addEventListener('click',e=>{if(e.target===document.getElementById('settings-modal'))closeSettings();});
+
+/* ══════════════════════════════════════════
    1. 예약 관리
 ══════════════════════════════════════════ */
 let bookings = JSON.parse(localStorage.getItem('mj_bookings') || '[]');
 let editId = null, filterMode = 'all', searchQ = '';
 
-function bkPersist() { localStorage.setItem('mj_bookings', JSON.stringify(bookings)); }
+function bkPersist() { localStorage.setItem('mj_bookings', JSON.stringify(bookings)); schedulePush(); }
 
 function basePrice(type) { return type === '4in2' ? 500000 : 300000; }
 function calcTotal(b) {
@@ -895,13 +961,13 @@ const WF_DEFAULT=[
   {stage:'s6',type:'msg',name:'후기 요청 문자',content:`안녕하세요 😊 마르체쥬입니다!\n\n서비스 이용해 주셔서 진심으로 감사드려요 🙏\n\n혹시 서비스 이용 후기를 남겨주실 수 있을까요?\n[후기 링크]\n\n소중한 피드백이 저에게 큰 힘이 됩니다 💛`},
 ];
 let tmpls=[], curStage='s1', wfEditIdx=null;
-function wfPersist(){localStorage.setItem('mj_flow',JSON.stringify(tmpls));}
+function wfPersist(){localStorage.setItem('mj_flow',JSON.stringify(tmpls));schedulePush();}
 function wfHydrate(){
   try{tmpls=JSON.parse(localStorage.getItem('mj_flow'))||null;}catch{tmpls=null;}
   if(!tmpls||!tmpls.length) tmpls=WF_DEFAULT.map(t=>({...t,id:'t'+Math.random().toString(36).slice(2)}));
 }
 function stageOf(id){return STAGES.find(s=>s.id===id);}
-function wfRender(){wfRenderNav();wfRenderHeader();wfRenderContent();updateWfStageSelect();}
+function wfRender(){wfRenderNav();wfRenderHeader();wfRenderContent();}
 function wfRenderNav(){
   document.getElementById('stage-nav').innerHTML=`<div class="sn-label">진행 단계</div>`+
     STAGES.map(s=>{
@@ -1045,7 +1111,7 @@ function doLoadState(){
   try{const saved=localStorage.getItem(DO_KEY);if(saved){DS=JSON.parse(saved);return;}}catch{}
   DS={event:{...DO_DEF_EVENT},phases:JSON.parse(JSON.stringify(DO_DEF_PHASES)),supplies:JSON.parse(JSON.stringify(DO_DEF_SUPPLIES)),checks:{},supChecks:{}};
 }
-function doSaveState(){localStorage.setItem(DO_KEY,JSON.stringify(DS));}
+function doSaveState(){localStorage.setItem(DO_KEY,JSON.stringify(DS));schedulePush();}
 function doRenderInfo(){
   const e=DS.event;
   document.getElementById('do-info-view').textContent=[e.name,e.date,e.time,e.venue].filter(Boolean).join(' · ');
@@ -1204,9 +1270,22 @@ function doSwitchTab(tab){
 /* ══════════════════════════════════════════
    INIT
 ══════════════════════════════════════════ */
-wfHydrate(); wfRender();
-doLoadState(); doRenderInfo(); doRenderChecks(); doRenderSupplies();
-bkRender();
+async function initApp(){
+  wfHydrate(); wfRender();
+  doLoadState(); doRenderInfo(); doRenderChecks(); doRenderSupplies();
+  bkRender();
+  if(hasCfg()){
+    const updated=await ghPull();
+    if(updated){
+      bookings=JSON.parse(localStorage.getItem('mj_bookings')||'[]');
+      try{tmpls=JSON.parse(localStorage.getItem('mj_flow'))||null;}catch{tmpls=null;}
+      if(!tmpls||!tmpls.length)tmpls=WF_DEFAULT.map(t=>({...t,id:'t'+Math.random().toString(36).slice(2)}));
+      doLoadState();
+      bkRender();wfRender();doRenderChecks();doRenderSupplies();
+    }
+  }
+}
+initApp();
 </script>
 </body>
 </html>
