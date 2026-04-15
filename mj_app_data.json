@@ -109,6 +109,31 @@
       "review2": false,
       "receipt": false,
       "paid": false
+    },
+    {
+      "id": "b1776269682057",
+      "name": "장주리",
+      "date": "2026-12-05",
+      "side": "groom",
+      "venue": "",
+      "type": "4in2",
+      "guests": "300",
+      "both": true,
+      "premiumG": "0",
+      "premiumB": "0",
+      "travel": "0",
+      "early": "10000",
+      "deposit": "325000",
+      "rb1": "30000",
+      "rb2": "30000",
+      "mycode": "AX873F",
+      "refcode": "AF192K",
+      "buddies": [],
+      "memo": "",
+      "review1": false,
+      "review2": false,
+      "receipt": false,
+      "paid": false
     }
   ],
   "flow": [
@@ -431,7 +456,9 @@
         ]
       }
     ],
-    "checks": {},
+    "checks": {
+      "0_2": false
+    },
     "supChecks": {
       "0_8": true,
       "0_9": true,
