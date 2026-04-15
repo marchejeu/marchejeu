@@ -77,6 +77,10 @@
         {
           "name": "이다은",
           "paid": false
+        },
+        {
+          "name": "장주리",
+          "paid": false
         }
       ],
       "memo": "",
