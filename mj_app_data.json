@@ -246,6 +246,31 @@
       "review2": false,
       "receipt": true,
       "paid": false
+    },
+    {
+      "id": "b1776270937371",
+      "name": "김성주",
+      "date": "2026-12-19",
+      "side": "groom",
+      "venue": "수원 wi컨벤션",
+      "type": "4in2",
+      "guests": "150",
+      "both": false,
+      "premiumG": "0",
+      "premiumB": "0",
+      "travel": "0",
+      "early": "30000",
+      "deposit": "250000",
+      "rb1": "10000",
+      "rb2": "20000",
+      "mycode": "AQ097L",
+      "refcode": "AT520E",
+      "buddies": [],
+      "memo": "",
+      "review1": true,
+      "review2": false,
+      "receipt": true,
+      "paid": false
     }
   ],
   "flow": [
