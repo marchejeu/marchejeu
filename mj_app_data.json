@@ -43,7 +43,12 @@
       "rb2": "60000",
       "mycode": "AB472K",
       "refcode": "",
-      "buddies": [],
+      "buddies": [
+        {
+          "name": "윤이나",
+          "paid": false
+        }
+      ],
       "memo": "",
       "review1": true,
       "review2": false,
