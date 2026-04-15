@@ -1,0 +1,31 @@
+{
+  "bookings": [
+    {
+      "id": "b1776262431395",
+      "name": "최주현",
+      "date": "2026-04-18",
+      "side": "groom",
+      "venue": "로프트가든344 10층 메인홀",
+      "type": "2in1",
+      "guests": "150",
+      "both": false,
+      "premiumG": "0",
+      "premiumB": "0",
+      "travel": "0",
+      "early": "0",
+      "deposit": "180000",
+      "rb1": "60000",
+      "rb2": "60000",
+      "mycode": "",
+      "refcode": "",
+      "buddies": [],
+      "memo": "잔금X",
+      "review1": true,
+      "review2": false,
+      "receipt": true,
+      "paid": false
+    }
+  ],
+  "flow": [],
+  "dayof": null
+}
