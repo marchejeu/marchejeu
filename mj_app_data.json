@@ -332,6 +332,10 @@
         {
           "name": "명문영",
           "paid": false
+        },
+        {
+          "name": "김성주",
+          "paid": false
         }
       ],
       "memo": "",
