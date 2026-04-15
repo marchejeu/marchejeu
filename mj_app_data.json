@@ -55,6 +55,10 @@
         {
           "name": "성유나",
           "paid": false
+        },
+        {
+          "name": "최도연",
+          "paid": false
         }
       ],
       "memo": "",
