@@ -67,13 +67,18 @@
       "premiumG": "0",
       "premiumB": "0",
       "travel": "0",
-      "early": "0",
+      "early": "10000",
       "deposit": "250000",
       "rb1": "40000",
       "rb2": "40000",
       "mycode": "AF192K",
       "refcode": "AB427K",
-      "buddies": [],
+      "buddies": [
+        {
+          "name": "이다은",
+          "paid": false
+        }
+      ],
       "memo": "",
       "review1": true,
       "review2": false,
