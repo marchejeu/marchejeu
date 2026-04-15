@@ -273,7 +273,12 @@
       "rb2": "20000",
       "mycode": "AQ097L",
       "refcode": "AT520E",
-      "buddies": [],
+      "buddies": [
+        {
+          "name": "박수아",
+          "paid": false
+        }
+      ],
       "memo": "",
       "review1": true,
       "review2": false,
