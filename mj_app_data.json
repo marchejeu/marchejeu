@@ -418,6 +418,32 @@
       "review2": false,
       "receipt": true,
       "paid": false
+    },
+    {
+      "id": "b1776356351363",
+      "name": "정명지",
+      "date": "2026-11-08",
+      "time": "12:00",
+      "side": "bride",
+      "venue": "부천 채림웨딩홀",
+      "type": "2in1",
+      "guests": "150",
+      "both": false,
+      "countingG": "open",
+      "countingB": "open",
+      "travel": "0",
+      "early": "30000",
+      "deposit": "150000",
+      "rb1": "10000",
+      "rb2": "20000",
+      "mycode": "AU071K",
+      "refcode": "AT520E",
+      "buddies": [],
+      "memo": "",
+      "review1": true,
+      "review2": false,
+      "receipt": true,
+      "paid": false
     }
   ],
   "flow": [
