@@ -71,7 +71,7 @@ input,textarea,select,button{font-family:'Noto Sans KR',sans-serif}
 .card-remain.done{color:var(--green)}.card-remain.pending{color:var(--red)}
 .card-chevron{color:var(--muted);font-size:0.62rem;transition:transform 0.2s;flex-shrink:0}
 .card.open .card-chevron{transform:rotate(180deg)}
-.card-body{display:none;padding:12px 14px;border-top:1px solid var(--line)}
+.card-body{display:none;padding:12px 14px;border-top:1px solid var(--line);max-height:60vh;overflow-y:auto}
 .card.open .card-body{display:block}
 .cb-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
 @media(max-width:500px){.cb-grid{grid-template-columns:1fr}}
@@ -304,7 +304,7 @@ input,textarea,select,button{font-family:'Noto Sans KR',sans-serif}
     <button class="filter-chip" onclick="setFilter('pending',this)">잔금 미수령</button>
     <button class="filter-chip" onclick="setFilter('done',this)">완료</button>
     <button class="filter-chip" onclick="setFilter('review',this)">후기 미작성</button>
-    <input class="filter-search" placeholder="🔍 고객명 검색..." oninput="setSearch(this.value)">
+    <input class="filter-search" placeholder="🔍 고객명 / 짝꿍코드 검색..." oninput="setSearch(this.value)">
   </div>
   <div class="summary" id="summary"></div>
   <div class="bk-list" id="bk-list"></div>
@@ -367,25 +367,26 @@ input,textarea,select,button{font-family:'Noto Sans KR',sans-serif}
   <div class="mf"><label>고객명</label><input id="m-name" placeholder="예) 최주현"></div>
   <div class="mf"><div class="row2">
     <div><label>예식 날짜</label><input id="m-date" type="date"></div>
-    <div><label>측</label><select id="m-side"><option value="groom">신랑측</option><option value="bride">신부측</option></select></div>
+    <div><label>예식 시간</label><input id="m-time" type="time" placeholder="예) 11:00"></div>
   </div></div>
+  <div class="mf"><label>측</label><select id="m-side"><option value="groom">신랑측</option><option value="bride">신부측</option></select></div>
   <div class="mf"><label>웨딩홀</label><input id="m-venue" placeholder="예) 그랜드볼룸 웨딩홀"></div>
   <div class="mf"><div class="row2">
     <div><label>구성</label><select id="m-type" onchange="calcPreview()"><option value="2in1">2인 1조 (30만)</option><option value="4in2">4인 2조 (50만)</option></select></div>
     <div><label>보증 하객수 (한측)</label><input id="m-guests" type="number" value="150" oninput="calcPreview()"></div>
   </div><div class="hint">150명 초과 시 10명당 +1만원</div></div>
-  <div class="m-section-title">요금 옵션</div>
+  <div class="mf">
+    <label>정산 방식 <span style="color:var(--muted);font-weight:400;font-size:0.68rem">(한측 기준)</span></label>
+    <div class="row2" style="margin-top:4px">
+      <div><label id="lbl-counting-g">신랑측</label><select id="m-counting-g" onchange="calcPreview()"><option value="open">개봉 (기본)</option><option value="sealed">미개봉 (기본)</option><option value="premium">권종별 계수 (+2.5만)</option></select></div>
+      <div id="wrap-counting-b" style="display:none"><label>신부측</label><select id="m-counting-b" onchange="calcPreview()"><option value="open">개봉 (기본)</option><option value="sealed">미개봉 (기본)</option><option value="premium">권종별 계수 (+2.5만)</option></select></div>
+    </div>
+  </div>
   <div class="mf">
     <label>양측 여부</label>
     <div class="check-row"><button class="ck-toggle" id="ck-both" onclick="toggleCk('ck-both');toggleBothUI();calcPreview()">양측 계약</button></div>
-    <div class="hint">양측이면 출장비 ×2 / 권종별 각각 선택</div>
-  </div>
-  <div class="mf"><div class="row2">
-    <div><label id="lbl-premium-g">권종별 계수</label><select id="m-premium-g" onchange="calcPreview()"><option value="0">스탠다드 (무료)</option><option value="25000">프리미엄 (+2.5만)</option></select></div>
-    <div id="wrap-premium-b" style="display:none"><label>권종별 계수 (신부측)</label><select id="m-premium-b" onchange="calcPreview()"><option value="0">스탠다드 (무료)</option><option value="25000">프리미엄 (+2.5만)</option></select></div>
-  </div></div>
-  <div class="mf"><div class="row2">
-    <div><label>출장비 <span id="lbl-travel-both" style="color:var(--gold);font-size:0.58rem"></span></label><select id="m-travel" onchange="calcPreview()"><option value="0">무료</option><option value="50000">+5만원</option><option value="100000">+10만원</option></select></div>
+    <div class="hint">양측이면 출장비 ×2 / 정산방식 각각 선택</div>
+  </div> <span id="lbl-travel-both" style="color:var(--gold);font-size:0.58rem"></span></label><select id="m-travel" onchange="calcPreview()"><option value="0">무료</option><option value="50000">+5만원</option><option value="100000">+10만원</option></select></div>
     <div><label>얼리버드 할인</label><input id="m-early" type="number" value="0" oninput="calcPreview()"></div>
   </div></div>
   <div class="m-section-title">계약금 & 할인</div>
@@ -653,30 +654,32 @@ let editId = null, filterMode = 'all', searchQ = '';
 function bkPersist() { localStorage.setItem('mj_bookings', JSON.stringify(bookings)); schedulePush(); }
 
 function basePrice(type) { return type === '4in2' ? 500000 : 300000; }
+function getPremium(counting) { return counting === 'premium' ? 25000 : 0; }
 function calcTotal(b) {
   const base = basePrice(b.type);
   const guests = parseInt(b.guests) || 150;
   const over = Math.max(0, guests - 150);
   const overCharge = Math.floor(over / 10) * 10000;
   const isBoth = b.both;
-  const premiumG = parseInt(b.premiumG) || 0;
-  const premiumB = isBoth ? (parseInt(b.premiumB) || 0) : 0;
+  const premiumG = getPremium(b.countingG || b.premiumG > 0 ? (b.countingG||'premium') : 'open');
+  const premiumB = isBoth ? getPremium(b.countingB || (b.premiumB > 0 ? 'premium' : 'open')) : 0;
   const travel = parseInt(b.travel) || 0;
   const travelTotal = isBoth ? travel * 2 : travel;
   return base + overCharge + premiumG + premiumB + travelTotal;
 }
 function calcBuddyDiscount(b) { return (b.buddies||[]).filter(bd=>bd.paid).length * 10000; }
+function calcRefDiscount(b) { return b.refcode ? 10000 : 0; } // 소개받은쪽 -1만
 function calcRemain(b) {
   const total = calcTotal(b);
   const deposit = parseInt(b.deposit)||0, early = parseInt(b.early)||0;
-  const rb1 = parseInt(b.rb1)||0, rb2 = parseInt(b.rb2)||0;
-  return total - deposit - early - rb1 - rb2 - calcBuddyDiscount(b);
+  // rb1(계약후기), rb2(본식후기)는 페이백이라 잔금에서 제외
+  return total - deposit - early - calcBuddyDiscount(b) - calcRefDiscount(b);
 }
 
 function toggleBothUI() {
   const isBoth = getCk('ck-both');
-  document.getElementById('wrap-premium-b').style.display = isBoth ? 'block' : 'none';
-  document.getElementById('lbl-premium-g').textContent = isBoth ? '권종별 계수 (신랑측)' : '권종별 계수';
+  document.getElementById('wrap-counting-b').style.display = isBoth ? 'block' : 'none';
+  document.getElementById('lbl-counting-g').textContent = isBoth ? '신랑측' : '정산방식';
   document.getElementById('lbl-travel-both').textContent = isBoth ? '(양측 ×2)' : '';
 }
 
@@ -711,14 +714,18 @@ function calcPreview() {
   const type = document.getElementById('m-type').value;
   const guests = parseInt(document.getElementById('m-guests').value)||150;
   const isBoth = getCk('ck-both');
-  const premiumG = parseInt(document.getElementById('m-premium-g').value)||0;
-  const premiumB = isBoth?(parseInt(document.getElementById('m-premium-b').value)||0):0;
+  const countingG = document.getElementById('m-counting-g').value;
+  const countingB = isBoth ? document.getElementById('m-counting-b').value : 'open';
+  const premiumG = getPremium(countingG);
+  const premiumB = isBoth ? getPremium(countingB) : 0;
   const travel = parseInt(document.getElementById('m-travel').value)||0;
   const travelTotal = isBoth?travel*2:travel;
   const early = parseInt(document.getElementById('m-early').value)||0;
   const deposit = parseInt(document.getElementById('m-deposit').value)||0;
   const rb1 = parseInt(document.getElementById('m-rb1').value)||0;
   const rb2 = parseInt(document.getElementById('m-rb2').value)||0;
+  const refcode = document.getElementById('m-refcode').value.trim();
+  const refDiscount = refcode ? 10000 : 0;
   const buddies = getBuddies();
   const buddyPaidCount = buddies.filter(bd=>bd.paid).length;
   const buddyDiscount = buddyPaidCount*10000;
@@ -726,20 +733,22 @@ function calcPreview() {
   const over = Math.max(0, guests-150);
   const overCharge = Math.floor(over/10)*10000;
   const total = base+overCharge+premiumG+premiumB+travelTotal;
-  const remain = total-deposit-early-rb1-rb2-buddyDiscount;
+  // 잔금 = 총액 - 계약금 - 얼리버드 - 짝꿍할인 - 소개받은할인 (페이백은 별도)
+  const remain = total-deposit-early-buddyDiscount-refDiscount;
+  const countingLabel = v => v==='premium'?'권종별 계수':v==='sealed'?'미개봉':'개봉';
   document.getElementById('calc-preview').innerHTML = `
     <div class="cp-row"><span class="cp-label">기본가</span><span class="cp-val">${won(base)}</span></div>
     ${overCharge>0?`<div class="cp-row"><span class="cp-label">하객수 초과 (+${over}명)</span><span class="cp-val">+${won(overCharge)}</span></div>`:''}
-    ${premiumG>0?`<div class="cp-row"><span class="cp-label">권종별${isBoth?' (신랑측)':''}</span><span class="cp-val">+${won(premiumG)}</span></div>`:''}
-    ${premiumB>0?`<div class="cp-row"><span class="cp-label">권종별 (신부측)</span><span class="cp-val">+${won(premiumB)}</span></div>`:''}
+    <div class="cp-row"><span class="cp-label">정산방식${isBoth?' (신랑)':''}</span><span class="cp-val">${countingLabel(countingG)}${premiumG>0?' +'+won(premiumG):''}</span></div>
+    ${isBoth?`<div class="cp-row"><span class="cp-label">정산방식 (신부)</span><span class="cp-val">${countingLabel(countingB)}${premiumB>0?' +'+won(premiumB):''}</span></div>`:''}
     ${travelTotal>0?`<div class="cp-row"><span class="cp-label">출장비${isBoth?' (×2)':''}</span><span class="cp-val">+${won(travelTotal)}</span></div>`:''}
     <div class="cp-row divider"><span class="cp-label" style="font-weight:700">총금액</span><span class="cp-val" style="font-weight:700">${won(total)}</span></div>
     ${deposit>0?`<div class="cp-row"><span class="cp-label">계약금</span><span class="cp-val" style="color:var(--green)">-${won(deposit)}</span></div>`:''}
-    ${early>0?`<div class="cp-row"><span class="cp-label">얼리버드</span><span class="cp-val" style="color:var(--green)">-${won(early)}</span></div>`:''}
-    ${rb1>0?`<div class="cp-row"><span class="cp-label">계약후기 페이백</span><span class="cp-val" style="color:var(--green)">-${won(rb1)}</span></div>`:''}
-    ${rb2>0?`<div class="cp-row"><span class="cp-label">본식후기 페이백</span><span class="cp-val" style="color:var(--green)">-${won(rb2)}</span></div>`:''}
+    ${early>0?`<div class="cp-row"><span class="cp-label">얼리버드 할인</span><span class="cp-val" style="color:var(--green)">-${won(early)}</span></div>`:''}
+    ${refDiscount>0?`<div class="cp-row"><span class="cp-label">짝꿍코드 할인</span><span class="cp-val" style="color:var(--green)">-${won(refDiscount)}</span></div>`:''}
     ${buddyDiscount>0?`<div class="cp-row"><span class="cp-label">짝꿍 페이백 (${buddyPaidCount}건)</span><span class="cp-val" style="color:var(--green)">-${won(buddyDiscount)}</span></div>`:''}
-    <div class="cp-row divider big"><span class="cp-label">잔금</span><span class="cp-val ${remain<=0?'green':'red'}">${remain<=0?'완납 ✓':won(remain)}</span></div>`;
+    <div class="cp-row divider big"><span class="cp-label">잔금</span><span class="cp-val ${remain<=0?'green':'red'}">${remain<=0?'완납 ✓':won(remain)}</span></div>
+    ${(rb1>0||rb2>0)?`<div class="cp-row" style="margin-top:6px;padding-top:6px;border-top:1px dashed var(--line)"><span class="cp-label" style="color:var(--sub);font-size:0.7rem">페이백 (예식 후 별도 지급)</span><span class="cp-val" style="color:var(--sub);font-size:0.7rem">${rb1>0?'계약후기 '+won(rb1):''}${rb1>0&&rb2>0?' / ':''}${rb2>0?'본식후기 '+won(rb2):''}</span></div>`:''}`;
 }
 
 function openAdd() {
@@ -747,11 +756,12 @@ function openAdd() {
   document.getElementById('bk-modal-h').textContent='예약 추가';
   ['m-name','m-venue','m-mycode','m-refcode','m-memo'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('m-date').value='';
+  document.getElementById('m-time').value='';
   document.getElementById('m-side').value='groom';
   document.getElementById('m-type').value='2in1';
   document.getElementById('m-guests').value='150';
-  document.getElementById('m-premium-g').value='0';
-  document.getElementById('m-premium-b').value='0';
+  document.getElementById('m-counting-g').value='open';
+  document.getElementById('m-counting-b').value='open';
   document.getElementById('m-travel').value='0';
   document.getElementById('m-early').value='0';
   document.getElementById('m-deposit').value='';
@@ -772,12 +782,13 @@ function openEdit(id) {
   document.getElementById('bk-modal-h').textContent='예약 편집';
   document.getElementById('m-name').value=b.name||'';
   document.getElementById('m-date').value=b.date||'';
+  document.getElementById('m-time').value=b.time||'';
   document.getElementById('m-side').value=b.side||'groom';
   document.getElementById('m-venue').value=b.venue||'';
   document.getElementById('m-type').value=b.type||'2in1';
   document.getElementById('m-guests').value=b.guests||'150';
-  document.getElementById('m-premium-g').value=b.premiumG||'0';
-  document.getElementById('m-premium-b').value=b.premiumB||'0';
+  document.getElementById('m-counting-g').value=b.countingG||'open';
+  document.getElementById('m-counting-b').value=b.countingB||'open';
   document.getElementById('m-travel').value=b.travel||'0';
   document.getElementById('m-early').value=b.early||'0';
   document.getElementById('m-deposit').value=b.deposit||'';
@@ -802,13 +813,14 @@ function saveBooking() {
   const b={
     id:editId||'b'+Date.now(), name,
     date:document.getElementById('m-date').value,
+    time:document.getElementById('m-time').value,
     side:document.getElementById('m-side').value,
     venue:document.getElementById('m-venue').value.trim(),
     type:document.getElementById('m-type').value,
     guests:document.getElementById('m-guests').value,
     both:getCk('ck-both'),
-    premiumG:document.getElementById('m-premium-g').value,
-    premiumB:document.getElementById('m-premium-b').value,
+    countingG:document.getElementById('m-counting-g').value,
+    countingB:document.getElementById('m-counting-b').value,
     travel:document.getElementById('m-travel').value,
     early:document.getElementById('m-early').value,
     deposit:document.getElementById('m-deposit').value,
@@ -843,7 +855,13 @@ function setFilter(mode,el){filterMode=mode;document.querySelectorAll('.filter-c
 function setSearch(q){searchQ=q;bkRender();}
 function filtered(){
   return bookings.filter(b=>{
-    if(searchQ&&!b.name.includes(searchQ))return false;
+    if(searchQ){
+      const q=searchQ.toLowerCase();
+      const nameMatch=b.name.toLowerCase().includes(q);
+      const mycodeMatch=(b.mycode||'').toLowerCase().includes(q);
+      const refcodeMatch=(b.refcode||'').toLowerCase().includes(q);
+      if(!nameMatch&&!mycodeMatch&&!refcodeMatch)return false;
+    }
     if(filterMode==='pending')return !b.paid;
     if(filterMode==='done')return b.paid;
     if(filterMode==='review')return !b.review1||!b.review2;
@@ -877,11 +895,13 @@ function bkRender(){
     const typeLabel=b.type==='4in2'?'4인2조':'2인1조';
     const dots=[b.review1,b.review2,b.receipt,b.paid].map(v=>`<div class="dot ${v?'on':'off'}"></div>`).join('');
     const guests=parseInt(b.guests)||150, over=Math.max(0,guests-150), overCharge=Math.floor(over/10)*10000;
-    const premiumG=parseInt(b.premiumG)||0, premiumB=isBoth?(parseInt(b.premiumB)||0):0;
+    const premiumG=getPremium(b.countingG||'open'), premiumB=isBoth?getPremium(b.countingB||'open'):0;
     const travel=parseInt(b.travel)||0, travelTotal=isBoth?travel*2:travel;
     const early=parseInt(b.early)||0, deposit=parseInt(b.deposit)||0;
     const rb1=parseInt(b.rb1)||0, rb2=parseInt(b.rb2)||0;
     const buddyDiscount=calcBuddyDiscount(b), buddyPaidCount=(b.buddies||[]).filter(bd=>bd.paid).length, buddyTotal=(b.buddies||[]).length;
+    const refDiscount=calcRefDiscount(b);
+    const countingLabel=v=>v==='premium'?'권종별 계수':v==='sealed'?'미개봉':'개봉';
     return `<div class="card" id="card-${b.id}">
       <div class="card-head" onclick="document.getElementById('card-${b.id}').classList.toggle('open')">
         <div class="card-date">${dateStr}</div>
@@ -896,12 +916,14 @@ function bkRender(){
         <div class="cb-grid">
           <div class="cb-section">
             <div class="cb-section-title">예약 정보</div>
-            <div class="cb-row"><span class="cb-row-label">날짜</span><span class="cb-row-val">${dateStr}</span></div>
+            <div class="cb-row"><span class="cb-row-label">날짜</span><span class="cb-row-val">${dateStr}${b.time?' '+b.time:''}</span></div>
             <div class="cb-row"><span class="cb-row-label">웨딩홀</span><span class="cb-row-val">${esc(b.venue)||'-'}</span></div>
             <div class="cb-row"><span class="cb-row-label">구성</span><span class="cb-row-val">${typeLabel}${isBoth?' · 양측':''}</span></div>
             <div class="cb-row"><span class="cb-row-label">하객수</span><span class="cb-row-val">${guests}명</span></div>
+            <div class="cb-row"><span class="cb-row-label">정산방식${isBoth?' (신랑)':''}</span><span class="cb-row-val">${countingLabel(b.countingG||'open')}</span></div>
+            ${isBoth?`<div class="cb-row"><span class="cb-row-label">정산방식 (신부)</span><span class="cb-row-val">${countingLabel(b.countingB||'open')}</span></div>`:''}
             ${b.mycode?`<div class="cb-row"><span class="cb-row-label">내 코드</span><span class="cb-row-val" style="color:var(--gold);font-family:var(--mono)">${esc(b.mycode)}</span></div>`:''}
-            ${b.refcode?`<div class="cb-row"><span class="cb-row-label">소개코드</span><span class="cb-row-val" style="font-family:var(--mono)">${esc(b.refcode)}</span></div>`:''}
+            ${b.refcode?`<div class="cb-row"><span class="cb-row-label">소개코드</span><span class="cb-row-val" style="font-family:var(--mono)">${esc(b.refcode)} (-1만)</span></div>`:''}
             ${buddyTotal>0?`<div class="cb-row"><span class="cb-row-label">짝꿍</span><span class="cb-row-val">${buddyTotal}명 중 ${buddyPaidCount}명 납부</span></div>`:''}
           </div>
           <div class="cb-section">
@@ -915,11 +937,11 @@ function bkRender(){
             <div class="cb-row"><span class="cb-row-label">총금액</span><span class="cb-row-val total">${won(total)}</span></div>
             ${deposit>0?`<div class="cb-row"><span class="cb-row-label">계약금</span><span class="cb-row-val minus">-${won(deposit)}</span></div>`:''}
             ${early>0?`<div class="cb-row"><span class="cb-row-label">얼리버드</span><span class="cb-row-val minus">-${won(early)}</span></div>`:''}
-            ${rb1>0?`<div class="cb-row"><span class="cb-row-label">계약후기</span><span class="cb-row-val minus">-${won(rb1)}</span></div>`:''}
-            ${rb2>0?`<div class="cb-row"><span class="cb-row-label">본식후기</span><span class="cb-row-val minus">-${won(rb2)}</span></div>`:''}
-            ${buddyDiscount>0?`<div class="cb-row"><span class="cb-row-label">짝꿍 (${buddyPaidCount}건)</span><span class="cb-row-val minus">-${won(buddyDiscount)}</span></div>`:''}
+            ${refDiscount>0?`<div class="cb-row"><span class="cb-row-label">짝꿍코드 할인</span><span class="cb-row-val minus">-${won(refDiscount)}</span></div>`:''}
+            ${buddyDiscount>0?`<div class="cb-row"><span class="cb-row-label">짝꿍 페이백 (${buddyPaidCount}건)</span><span class="cb-row-val minus">-${won(buddyDiscount)}</span></div>`:''}
             <div class="cb-divider"></div>
             <div class="cb-row big"><span class="cb-row-label">잔금</span><span class="cb-row-val ${b.paid?'done':'pending'}">${b.paid?'완납 ✓':won(remain)}</span></div>
+            ${(rb1>0||rb2>0)?`<div class="cb-divider"></div><div class="cb-row"><span class="cb-row-label" style="color:var(--sub);font-size:0.7rem">페이백 (별도)</span><span class="cb-row-val" style="color:var(--sub);font-size:0.7rem">${rb1>0?'계약'+won(rb1):''}${rb1>0&&rb2>0?' / ':''}${rb2>0?'본식'+won(rb2):''}</span></div>`:''}
           </div>
         </div>
         <div class="cb-checks">
@@ -1277,11 +1299,14 @@ async function initApp(){
   if(hasCfg()){
     const updated=await ghPull();
     if(updated){
+      // 예약
       bookings=JSON.parse(localStorage.getItem('mj_bookings')||'[]');
-      try{tmpls=JSON.parse(localStorage.getItem('mj_flow'))||null;}catch{tmpls=null;}
-      if(!tmpls||!tmpls.length)tmpls=WF_DEFAULT.map(t=>({...t,id:'t'+Math.random().toString(36).slice(2)}));
+      // 워크플로우 - wfHydrate() 다시 호출해서 tmpls 갱신
+      wfHydrate();
+      // 당일 - DS 갱신
       doLoadState();
-      bkRender();wfRender();doRenderChecks();doRenderSupplies();
+      // 전체 재렌더
+      bkRender(); wfRender(); doRenderInfo(); doRenderChecks(); doRenderSupplies();
     }
   }
 }
