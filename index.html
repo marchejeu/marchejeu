@@ -671,13 +671,14 @@ function calcTotal(b) {
   const travelTotal = isBoth ? travel * 2 : travel;
   return base + overCharge + premiumG + premiumB + travelTotal;
 }
-function calcBuddyDiscount(b) { return (b.buddies||[]).filter(bd=>bd.paid).length * 10000; }
-function calcRefDiscount(b) { return b.refcode ? 10000 : 0; } // 소개받은쪽 -1만
+function calcBuddyPayback(b) { return (b.buddies||[]).filter(bd=>bd.paid).length * 10000; }
+function calcRefDiscount(b) { return b.refcode ? 10000 : 0; }
 function calcRemain(b) {
   const total = calcTotal(b);
   const deposit = parseInt(b.deposit)||0, early = parseInt(b.early)||0;
-  // rb1(계약후기), rb2(본식후기)는 페이백이라 잔금에서 제외
-  return total - deposit - early - calcBuddyDiscount(b) - calcRefDiscount(b);
+  const rb1 = parseInt(b.rb1)||0; // 계약후기 → 잔금 차감
+  // rb2(본식후기), buddyPayback(짝꿍 페이백)은 예식 후 별도 지급
+  return total - deposit - early - rb1 - calcRefDiscount(b);
 }
 
 function toggleBothUI() {
@@ -732,13 +733,14 @@ function calcPreview() {
   const refDiscount = refcode ? 10000 : 0;
   const buddies = getBuddies();
   const buddyPaidCount = buddies.filter(bd=>bd.paid).length;
-  const buddyDiscount = buddyPaidCount*10000;
+  const buddyPayback = buddyPaidCount*10000; // 짝꿍코드로 계약한 고객 수 × 1만 → 별도 페이백
   const base = basePrice(type);
   const over = Math.max(0, guests-150);
   const overCharge = Math.floor(over/10)*10000;
   const total = base+overCharge+premiumG+premiumB+travelTotal;
-  // 잔금 = 총액 - 계약금 - 얼리버드 - 짝꿍할인 - 소개받은할인 (페이백은 별도)
-  const remain = total-deposit-early-buddyDiscount-refDiscount;
+  // 잔금 = 총액 - 계약금 - 얼리버드 - 계약후기(rb1) - 짝꿍코드할인
+  // 페이백(별도): 본식후기(rb2) + 짝꿍코드 계약건 × 1만
+  const remain = total-deposit-early-rb1-refDiscount;
   const countingLabel = v => v==='premium'?'권종별 계수':v==='sealed'?'미개봉':'개봉';
   document.getElementById('calc-preview').innerHTML = `
     <div class="cp-row"><span class="cp-label">기본가</span><span class="cp-val">${won(base)}</span></div>
@@ -750,9 +752,9 @@ function calcPreview() {
     ${deposit>0?`<div class="cp-row"><span class="cp-label">계약금</span><span class="cp-val" style="color:var(--green)">-${won(deposit)}</span></div>`:''}
     ${early>0?`<div class="cp-row"><span class="cp-label">얼리버드 할인</span><span class="cp-val" style="color:var(--green)">-${won(early)}</span></div>`:''}
     ${refDiscount>0?`<div class="cp-row"><span class="cp-label">짝꿍코드 할인</span><span class="cp-val" style="color:var(--green)">-${won(refDiscount)}</span></div>`:''}
-    ${buddyDiscount>0?`<div class="cp-row"><span class="cp-label">짝꿍 페이백 (${buddyPaidCount}건)</span><span class="cp-val" style="color:var(--green)">-${won(buddyDiscount)}</span></div>`:''}
+    ${rb1>0?`<div class="cp-row"><span class="cp-label">계약후기 차감</span><span class="cp-val" style="color:var(--green)">-${won(rb1)}</span></div>`:''}
     <div class="cp-row divider big"><span class="cp-label">잔금</span><span class="cp-val ${remain<=0?'green':'red'}">${remain<=0?'완납 ✓':won(remain)}</span></div>
-    ${(rb1>0||rb2>0)?`<div class="cp-row" style="margin-top:6px;padding-top:6px;border-top:1px dashed var(--line)"><span class="cp-label" style="color:var(--sub);font-size:0.7rem">페이백 (예식 후 별도 지급)</span><span class="cp-val" style="color:var(--sub);font-size:0.7rem">${rb1>0?'계약후기 '+won(rb1):''}${rb1>0&&rb2>0?' / ':''}${rb2>0?'본식후기 '+won(rb2):''}</span></div>`:''}`;
+    ${(rb2>0||buddyPayback>0)?`<div class="cp-row" style="margin-top:6px;padding-top:6px;border-top:1px dashed var(--line)"><span class="cp-label" style="color:var(--sub);font-size:0.7rem">페이백 (예식 후 별도 지급)</span><span class="cp-val" style="color:var(--sub);font-size:0.7rem">${rb2>0?'본식후기 '+won(rb2):''}${rb2>0&&buddyPayback>0?' / ':''}${buddyPayback>0?'짝꿍 '+buddyPaidCount+'건 '+won(buddyPayback):''}</span></div>`:''}`;
 }
 
 function openAdd() {
@@ -903,7 +905,7 @@ function bkRender(){
     const travel=parseInt(b.travel)||0, travelTotal=isBoth?travel*2:travel;
     const early=parseInt(b.early)||0, deposit=parseInt(b.deposit)||0;
     const rb1=parseInt(b.rb1)||0, rb2=parseInt(b.rb2)||0;
-    const buddyDiscount=calcBuddyDiscount(b), buddyPaidCount=(b.buddies||[]).filter(bd=>bd.paid).length, buddyTotal=(b.buddies||[]).length;
+    const buddyPayback=calcBuddyPayback(b), buddyPaidCount=(b.buddies||[]).filter(bd=>bd.paid).length, buddyTotal=(b.buddies||[]).length;
     const refDiscount=calcRefDiscount(b);
     const countingLabel=v=>v==='premium'?'권종별 계수':v==='sealed'?'미개봉':'개봉';
     return `<div class="card" id="card-${b.id}">
@@ -942,10 +944,11 @@ function bkRender(){
             ${deposit>0?`<div class="cb-row"><span class="cb-row-label">계약금</span><span class="cb-row-val minus">-${won(deposit)}</span></div>`:''}
             ${early>0?`<div class="cb-row"><span class="cb-row-label">얼리버드</span><span class="cb-row-val minus">-${won(early)}</span></div>`:''}
             ${refDiscount>0?`<div class="cb-row"><span class="cb-row-label">짝꿍코드 할인</span><span class="cb-row-val minus">-${won(refDiscount)}</span></div>`:''}
-            ${buddyDiscount>0?`<div class="cb-row"><span class="cb-row-label">짝꿍 페이백 (${buddyPaidCount}건)</span><span class="cb-row-val minus">-${won(buddyDiscount)}</span></div>`:''}
+            ${rb1>0?`<div class="cb-row"><span class="cb-row-label">계약후기 차감</span><span class="cb-row-val minus">-${won(rb1)}</span></div>`:''}
             <div class="cb-divider"></div>
             <div class="cb-row big"><span class="cb-row-label">잔금</span><span class="cb-row-val ${b.paid?'done':'pending'}">${b.paid?'완납 ✓':won(remain)}</span></div>
-            ${(rb1>0||rb2>0)?`<div class="cb-divider"></div><div class="cb-row"><span class="cb-row-label" style="color:var(--sub);font-size:0.7rem">페이백 (별도)</span><span class="cb-row-val" style="color:var(--sub);font-size:0.7rem">${rb1>0?'계약'+won(rb1):''}${rb1>0&&rb2>0?' / ':''}${rb2>0?'본식'+won(rb2):''}</span></div>`:''}
+            ${(rb2>0||buddyPayback>0)?`<div class="cb-divider"></div>
+            <div class="cb-row"><span class="cb-row-label" style="color:var(--sub);font-size:0.7rem">페이백 (예식 후 별도 지급)</span><span class="cb-row-val" style="color:var(--sub);font-size:0.7rem">${rb2>0?'본식후기 '+won(rb2):''}${rb2>0&&buddyPayback>0?' / ':''}${buddyPayback>0?'짝꿍 '+buddyPaidCount+'건 '+won(buddyPayback):''}</span></div>`:''}
           </div>
         </div>
         <div class="cb-checks">
