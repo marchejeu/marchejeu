@@ -369,7 +369,7 @@ input,textarea,select,button{font-family:'Noto Sans KR',sans-serif}
     <div><label>예식 날짜</label><input id="m-date" type="date"></div>
     <div><label>예식 시간</label><input id="m-time" type="time" placeholder="예) 11:00"></div>
   </div></div>
-  <div class="mf"><label>측</label><select id="m-side"><option value="groom">신랑측</option><option value="bride">신부측</option></select></div>
+  <div class="mf"><label>측</label><select id="m-side"><option value="groom">신랑측</option><option value="bride">신부측</option><option value="both">양측</option></select></div>
   <div class="mf"><label>웨딩홀</label><input id="m-venue" placeholder="예) 그랜드볼룸 웨딩홀"></div>
   <div class="mf"><div class="row2">
     <div><label>구성</label><select id="m-type" onchange="calcPreview()"><option value="2in1">2인 1조 (30만)</option><option value="4in2">4인 2조 (50만)</option></select></div>
@@ -386,7 +386,9 @@ input,textarea,select,button{font-family:'Noto Sans KR',sans-serif}
     <label>양측 여부</label>
     <div class="check-row"><button class="ck-toggle" id="ck-both" onclick="toggleCk('ck-both');toggleBothUI();calcPreview()">양측 계약</button></div>
     <div class="hint">양측이면 출장비 ×2 / 정산방식 각각 선택</div>
-  </div> <span id="lbl-travel-both" style="color:var(--gold);font-size:0.58rem"></span></label><select id="m-travel" onchange="calcPreview()"><option value="0">무료</option><option value="50000">+5만원</option><option value="100000">+10만원</option></select></div>
+  </div>
+  <div class="mf"><div class="row2">
+    <div><label>출장비 <span id="lbl-travel-both" style="color:var(--gold);font-size:0.58rem"></span></label><select id="m-travel" onchange="calcPreview()"><option value="0">무료</option><option value="50000">+5만원</option><option value="100000">+10만원</option></select></div>
     <div><label>얼리버드 할인</label><input id="m-early" type="number" value="0" oninput="calcPreview()"></div>
   </div></div>
   <div class="m-section-title">계약금 & 할인</div>
@@ -889,7 +891,7 @@ function bkRender(){
   el.innerHTML=list.map(b=>{
     const total=calcTotal(b), remain=calcRemain(b);
     const dateStr=b.date?b.date.replace(/-/g,'.').slice(2):'날짜 미정';
-    const isBoth=b.both;
+    const isBoth=b.both||b.side==='both';
     const sideClass=isBoth?'side-both':b.side==='bride'?'side-bride':'side-groom';
     const sideLabel=isBoth?'양측':b.side==='bride'?'신부측':'신랑측';
     const typeLabel=b.type==='4in2'?'4인2조':'2인1조';
