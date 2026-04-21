@@ -127,7 +127,12 @@
       "rb2": "30000",
       "mycode": "AE261B",
       "refcode": "AF192K",
-      "buddies": [],
+      "buddies": [
+        {
+          "name": "한혜진",
+          "paid": false
+        }
+      ],
       "memo": "",
       "review1": true,
       "review2": false,
