@@ -527,6 +527,32 @@
       "review2": false,
       "receipt": true,
       "paid": false
+    },
+    {
+      "id": "b1776754203241",
+      "name": "이진근",
+      "date": "2026-10-31",
+      "time": "12:10",
+      "side": "groom",
+      "venue": "인천 송도 메리빌리아 셀레스메리홀",
+      "type": "2in1",
+      "guests": "150",
+      "both": false,
+      "countingG": "premium",
+      "countingB": "open",
+      "travel": "0",
+      "early": "30000",
+      "deposit": "162500",
+      "rb1": "10000",
+      "rb2": "20000",
+      "mycode": "",
+      "refcode": "AT520E",
+      "buddies": [],
+      "memo": "계약후기 안쓰심 (4/21 계약)",
+      "review1": false,
+      "review2": false,
+      "receipt": true,
+      "paid": false
     }
   ],
   "flow": [
