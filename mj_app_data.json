@@ -357,6 +357,10 @@
         {
           "name": "임혜빈",
           "paid": false
+        },
+        {
+          "name": "김은영",
+          "paid": false
         }
       ],
       "memo": "",
