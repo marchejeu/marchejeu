@@ -361,6 +361,10 @@
         {
           "name": "김은영",
           "paid": false
+        },
+        {
+          "name": "정명지",
+          "paid": false
         }
       ],
       "memo": "",
