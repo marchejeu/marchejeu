@@ -365,6 +365,10 @@
         {
           "name": "정명지",
           "paid": false
+        },
+        {
+          "name": "이진근",
+          "paid": false
         }
       ],
       "memo": "",
