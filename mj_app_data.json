@@ -558,6 +558,32 @@
       "review2": false,
       "receipt": true,
       "paid": false
+    },
+    {
+      "id": "b1776823810897",
+      "name": "김차은",
+      "date": "2026-04-25",
+      "time": "17:20",
+      "side": "both",
+      "venue": "안양 위더스",
+      "type": "4in2",
+      "guests": "150",
+      "both": true,
+      "countingG": "open",
+      "countingB": "open",
+      "travel": "50000",
+      "early": "110000",
+      "deposit": "275000",
+      "rb1": "10000",
+      "rb2": "20000",
+      "mycode": "AQ377T",
+      "refcode": "",
+      "buddies": [],
+      "memo": "",
+      "review1": false,
+      "review2": false,
+      "receipt": true,
+      "paid": false
     }
   ],
   "flow": [
