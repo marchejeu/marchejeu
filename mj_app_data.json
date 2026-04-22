@@ -131,6 +131,10 @@
         {
           "name": "한혜진",
           "paid": false
+        },
+        {
+          "name": "양효주",
+          "paid": false
         }
       ],
       "memo": "",
