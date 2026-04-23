@@ -513,7 +513,12 @@
       "rb2": "20000",
       "mycode": "AQ016P",
       "refcode": "AT520E",
-      "buddies": [],
+      "buddies": [
+        {
+          "name": "김지율",
+          "paid": false
+        }
+      ],
       "memo": "",
       "review1": false,
       "review2": false,
