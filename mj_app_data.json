@@ -654,6 +654,32 @@
       "review2": false,
       "receipt": true,
       "paid": false
+    },
+    {
+      "id": "b1776934534889",
+      "name": "김지율",
+      "date": "2026-09-19",
+      "time": "15:30",
+      "side": "both",
+      "venue": "판교 W스퀘어컨벤션",
+      "type": "4in2",
+      "guests": "150",
+      "both": true,
+      "countingG": "open",
+      "countingB": "open",
+      "travel": "50000",
+      "early": "80000",
+      "deposit": "275000",
+      "rb1": "10000",
+      "rb2": "20000",
+      "mycode": "AY009K",
+      "refcode": "AQ016P",
+      "buddies": [],
+      "memo": "",
+      "review1": false,
+      "review2": false,
+      "receipt": true,
+      "paid": false
     }
   ],
   "flow": [
