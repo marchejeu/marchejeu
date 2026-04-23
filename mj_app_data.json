@@ -614,6 +614,32 @@
       "review2": false,
       "receipt": true,
       "paid": false
+    },
+    {
+      "id": "b1776931228568",
+      "name": "김지연",
+      "date": "2026-08-29",
+      "time": "12:40",
+      "side": "both",
+      "venue": "빌라드지디 안산",
+      "type": "4in2",
+      "guests": "150",
+      "both": true,
+      "countingG": "open",
+      "countingB": "open",
+      "travel": "0",
+      "early": "30000",
+      "deposit": "250000",
+      "rb1": "10000",
+      "rb2": "20000",
+      "mycode": "AS801F",
+      "refcode": "AW117P",
+      "buddies": [],
+      "memo": "",
+      "review1": true,
+      "review2": false,
+      "receipt": true,
+      "paid": false
     }
   ],
   "flow": [
