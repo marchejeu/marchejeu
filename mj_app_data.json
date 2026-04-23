@@ -373,6 +373,10 @@
         {
           "name": "이진근",
           "paid": false
+        },
+        {
+          "name": "박진솔",
+          "paid": false
         }
       ],
       "memo": "",
