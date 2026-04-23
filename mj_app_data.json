@@ -400,7 +400,12 @@
       "rb2": "20000",
       "mycode": "AW117P",
       "refcode": "AQ097L",
-      "buddies": [],
+      "buddies": [
+        {
+          "name": "김지연",
+          "paid": false
+        }
+      ],
       "memo": "",
       "review1": true,
       "review2": false,
