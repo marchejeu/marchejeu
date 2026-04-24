@@ -381,6 +381,10 @@
         {
           "name": "이재영",
           "paid": false
+        },
+        {
+          "name": "유가연",
+          "paid": false
         }
       ],
       "memo": "",
