@@ -525,6 +525,14 @@
         {
           "name": "김지율",
           "paid": false
+        },
+        {
+          "name": "김차은",
+          "paid": false
+        },
+        {
+          "name": "송도영",
+          "paid": false
         }
       ],
       "memo": "",
