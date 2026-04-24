@@ -377,6 +377,10 @@
         {
           "name": "박진솔",
           "paid": false
+        },
+        {
+          "name": "이재영",
+          "paid": false
         }
       ],
       "memo": "",
