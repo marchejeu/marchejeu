@@ -876,7 +876,7 @@
       "memo": "",
       "review1": false,
       "review2": false,
-      "receipt": false,
+      "receipt": true,
       "paid": false
     }
   ],
