@@ -800,6 +800,32 @@
       "review2": false,
       "receipt": true,
       "paid": false
+    },
+    {
+      "id": "b1777360679081",
+      "name": "유현지",
+      "date": "2026-05-16",
+      "time": "14:00",
+      "side": "bride",
+      "venue": "수원 디에스컨벤션",
+      "type": "2in1",
+      "guests": "150",
+      "both": false,
+      "countingG": "premium",
+      "countingB": "open",
+      "travel": "50000",
+      "early": "55000",
+      "deposit": "175000",
+      "rb1": "10000",
+      "rb2": "20000",
+      "mycode": "BH650V",
+      "refcode": "",
+      "buddies": [],
+      "memo": "",
+      "review1": false,
+      "review2": false,
+      "receipt": true,
+      "paid": false
     }
   ],
   "flow": [
