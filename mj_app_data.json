@@ -328,7 +328,7 @@
       "review1": false,
       "review2": false,
       "receipt": true,
-      "paid": false
+      "paid": true
     },
     {
       "id": "b1776271431900",
