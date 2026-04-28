@@ -690,9 +690,18 @@
       "rb2": "20000",
       "mycode": "AY009K",
       "refcode": "AQ016P",
-      "buddies": [],
+      "buddies": [
+        {
+          "name": "김나래",
+          "paid": false
+        },
+        {
+          "name": "민윤기",
+          "paid": false
+        }
+      ],
       "memo": "",
-      "review1": false,
+      "review1": true,
       "review2": false,
       "receipt": true,
       "paid": false
