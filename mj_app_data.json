@@ -744,7 +744,7 @@
       "refcode": "AQ016P",
       "buddies": [],
       "memo": "",
-      "review1": false,
+      "review1": true,
       "review2": false,
       "receipt": true,
       "paid": false
