@@ -24,7 +24,7 @@
       "review1": true,
       "review2": false,
       "receipt": true,
-      "paid": false
+      "paid": true
     },
     {
       "id": "b1776264936357",
