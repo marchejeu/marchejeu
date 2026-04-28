@@ -852,6 +852,32 @@
       "review2": false,
       "receipt": true,
       "paid": false
+    },
+    {
+      "id": "b1777361123459",
+      "name": "남지현",
+      "date": "2027-01-17",
+      "time": "15:00",
+      "side": "both",
+      "venue": "송도 메리빌리아",
+      "type": "4in2",
+      "guests": "150",
+      "both": true,
+      "countingG": "open",
+      "countingB": "open",
+      "travel": "0",
+      "early": "30000",
+      "deposit": "250000",
+      "rb1": "10000",
+      "rb2": "20000",
+      "mycode": "BF538A",
+      "refcode": "BG183N",
+      "buddies": [],
+      "memo": "",
+      "review1": false,
+      "review2": false,
+      "receipt": false,
+      "paid": false
     }
   ],
   "flow": [
