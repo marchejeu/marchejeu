@@ -907,7 +907,12 @@
       "rb2": "20000",
       "mycode": "BG183N",
       "refcode": "AU334A",
-      "buddies": [],
+      "buddies": [
+        {
+          "name": "남지현",
+          "paid": false
+        }
+      ],
       "memo": "",
       "review1": false,
       "review2": false,
