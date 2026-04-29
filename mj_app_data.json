@@ -469,7 +469,12 @@
       "rb2": "20000",
       "mycode": "AW232F",
       "refcode": "AT520E",
-      "buddies": [],
+      "buddies": [
+        {
+          "name": "정동욱",
+          "paid": false
+        }
+      ],
       "memo": "",
       "review1": true,
       "review2": false,
