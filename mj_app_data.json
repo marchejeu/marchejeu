@@ -538,6 +538,10 @@
         {
           "name": "송도영",
           "paid": false
+        },
+        {
+          "name": "오영오",
+          "paid": false
         }
       ],
       "memo": "",
