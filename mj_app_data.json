@@ -477,9 +477,9 @@
       ],
       "memo": "",
       "review1": true,
-      "review2": false,
+      "review2": true,
       "receipt": true,
-      "paid": false
+      "paid": true
     },
     {
       "id": "b1776356351363",
